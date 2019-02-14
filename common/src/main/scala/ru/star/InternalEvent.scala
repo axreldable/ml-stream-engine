@@ -9,4 +9,7 @@ package ru.star
   * @param message - message context
   */
 // todo: replace message with event representation
-final case class InternalEvent(id: String, message: String)
+final case class InternalEvent(id: String,
+                               messageTimestamp: Long,
+                               createTimestamp: Long,
+                               message: Option[String])
