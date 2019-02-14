@@ -20,7 +20,9 @@ lazy val common = project
     version := "1.0.0",
     assemblySettings,
     libraryDependencies ++= Seq(
-      Dependencies.sparkCore,
+      Dependencies.flinkCore,
+      Dependencies.flinkStreaming,
+      Dependencies.flinkConnectorKafka,
     )
   )
 
@@ -30,9 +32,7 @@ lazy val input_adapter = project
     name := "input-adapter",
     version := "1.0.0",
     assemblySettings,
-    libraryDependencies ++= Seq(
-      Dependencies.sparkCore % Provided,
-    )
+    libraryDependencies ++= Seq()
   ).dependsOn(common)
 
 lazy val output_adapter = project
@@ -41,9 +41,7 @@ lazy val output_adapter = project
     name := "output-adapter",
     version := "1.0.0",
     assemblySettings,
-    libraryDependencies ++= Seq(
-      Dependencies.sparkCore % Provided,
-    )
+    libraryDependencies ++= Seq()
   ).dependsOn(common)
 
 lazy val core = project
@@ -52,9 +50,7 @@ lazy val core = project
     name := "core",
     version := "1.0.0",
     assemblySettings,
-    libraryDependencies ++= Seq(
-      Dependencies.sparkCore % Provided,
-    )
+    libraryDependencies ++= Seq()
   ).dependsOn(common)
 
 lazy val assemblySettings = Seq(
