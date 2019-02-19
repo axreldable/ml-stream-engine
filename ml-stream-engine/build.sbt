@@ -23,6 +23,8 @@ lazy val common = project
       Dependencies.flinkCore,
       Dependencies.flinkStreaming,
       Dependencies.flinkConnectorKafka,
+      
+      Dependencies.scalaLogging,
     )
   )
 
@@ -50,7 +52,9 @@ lazy val core = project
     name := "core",
     version := "1.0.0",
     assemblySettings,
-    libraryDependencies ++= Seq()
+    libraryDependencies ++= Seq(
+      Dependencies.scalaTest % Test,
+    )
   ).dependsOn(common)
 
 lazy val assemblySettings = Seq(
