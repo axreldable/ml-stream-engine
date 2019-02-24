@@ -29,6 +29,10 @@ object InternalEvent {
       message = Option(event)
     )
   }
+
+  def toString(event: InternalEvent): String = {
+    event.message.getOrElse("empty message")
+  }
 }
 
 
