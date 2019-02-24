@@ -1,35 +1,22 @@
 package ru.star
 
-import java.time.LocalDateTime
-import java.util.Properties
-
-import com.typesafe.scalalogging.LazyLogging
-import org.apache.flink.api.common.serialization.SimpleStringSchema
-import org.apache.flink.streaming.api.scala.{StreamExecutionEnvironment, _}
+import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
 
-object CoreJob extends App with LazyLogging {
+object CoreJob extends App {
+  println("CoreJob started.")
+
   val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
 
-  println("Start.")
   val params: Parameters = Parameters(args)
-  params.kafkaConsumerProperties
 
-  val eventConsumer = FlinkKafkaConsumer[InternalEvent]("test", new SimpleStringSchema(), params.kafkaConsumerProperties)
+  val eventConsumer = new FlinkKafkaConsumer[InternalEvent](
+    "input-adapter-out", new InternalEventDeserializer(), params.kafkaConsumerProperties)
 
-//  MLExecutorBuilder(
-//    events =
-//  )
+  MLExecutorBuilder(
+    env = env,
+    eventSource = eventConsumer
+  ).build()
 
-
-
-//  val stream: DataStream[InternalEvent] = env
-//    .addSource(new FlinkKafkaConsumer[String]("test", new SimpleStringSchema(), properties))
-//    .map(mes => {
-//      val event = InternalEvent(LocalDateTime.now().toString, mes)
-//      println(event)
-//      event
-//    })
-//
-//  env.execute()
+  env.execute()
 }
