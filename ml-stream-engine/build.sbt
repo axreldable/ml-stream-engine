@@ -53,6 +53,8 @@ lazy val core = project
     version := "1.0.0",
     assemblySettings,
     libraryDependencies ++= Seq(
+      Dependencies.flinkJpmml,
+      
       Dependencies.scalaTest % Test,
     )
   ).dependsOn(common)
