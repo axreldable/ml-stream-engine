@@ -1,6 +1,6 @@
 name := "ml-stream-engine"
 organization in ThisBuild := "ru.star"
-scalaVersion := "2.12.8"
+scalaVersion in ThisBuild := "2.11.12"
 logLevel := Level.Info
 
 lazy val global = project
@@ -10,7 +10,7 @@ lazy val global = project
     common,
     core,
     input_adapter,
-    output_adapter,
+    output_adapter
   )
 
 lazy val common = project
@@ -24,7 +24,7 @@ lazy val common = project
       Dependencies.flinkStreaming,
       Dependencies.flinkConnectorKafka,
       
-      Dependencies.scalaLogging,
+      Dependencies.scalaLogging
     )
   )
 
@@ -55,7 +55,7 @@ lazy val core = project
     libraryDependencies ++= Seq(
       Dependencies.flinkJpmml,
       
-      Dependencies.scalaTest % Test,
+      Dependencies.scalaTest % Test
     )
   ).dependsOn(common)
 
