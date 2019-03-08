@@ -2,6 +2,7 @@ package ru.star
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
 
+import io.radicalbit.flink.pmml.scala.models.input.BaseEvent
 import org.apache.flink.api.common.serialization.{DeserializationSchema, SerializationSchema}
 import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.streaming.api.scala.createTypeInformation
@@ -18,7 +19,11 @@ import org.apache.flink.streaming.api.scala.createTypeInformation
 final case class InternalEvent(id: String,
                                messageTimestamp: Long,
                                createTimestamp: Long,
-                               message: Option[String]) extends Serializable
+                               message: Option[String]) extends Serializable with BaseEvent {
+  override def modelId: String = "123"
+
+  override def occurredOn: Long = 123
+}
 
 object InternalEvent {
   def fromString(event: String): InternalEvent = {

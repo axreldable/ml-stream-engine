@@ -17,11 +17,11 @@ object CoreJob extends App {
     "output-adapter-in", new InternalEventSerializer(), params.kafkaProducerProperties
   )
 
-  MLExecutorBuilder(
-    env = env,
-    eventSource = eventConsumer,
-    eventSink = eventProducer
-  ).build()
+//  MLExecutorBuilder(
+//    env = env,
+//    eventSource = eventConsumer,
+//    eventSink = eventProducer
+//  ).build()
 
   env.execute()
 }

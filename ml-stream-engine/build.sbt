@@ -23,8 +23,7 @@ lazy val common = project
       Dependencies.flinkCore,
       Dependencies.flinkStreaming,
       Dependencies.flinkConnectorKafka,
-      
-      Dependencies.scalaLogging
+      Dependencies.flinkJpmml  
     )
   )
 
@@ -34,7 +33,9 @@ lazy val input_adapter = project
     name := "input-adapter",
     version := "1.0.0",
     assemblySettings,
-    libraryDependencies ++= Seq()
+    libraryDependencies ++= Seq(
+      Dependencies.scalaTest % Test
+    )
   ).dependsOn(common)
 
 lazy val output_adapter = project
@@ -43,7 +44,9 @@ lazy val output_adapter = project
     name := "output-adapter",
     version := "1.0.0",
     assemblySettings,
-    libraryDependencies ++= Seq()
+    libraryDependencies ++= Seq(
+      Dependencies.scalaTest % Test
+    )
   ).dependsOn(common)
 
 lazy val core = project
@@ -53,8 +56,6 @@ lazy val core = project
     version := "1.0.0",
     assemblySettings,
     libraryDependencies ++= Seq(
-      Dependencies.flinkJpmml,
-      
       Dependencies.scalaTest % Test
     )
   ).dependsOn(common)
@@ -63,6 +64,6 @@ lazy val assemblySettings = Seq(
   assemblyJarName in assembly := name.value + "_" + version.value + ".jar",
   assemblyMergeStrategy in assembly := {
     case PathList("META-INF", xs@_*) => MergeStrategy.discard
-    case _                           => MergeStrategy.first
+    case _ => MergeStrategy.first
   }
 )
