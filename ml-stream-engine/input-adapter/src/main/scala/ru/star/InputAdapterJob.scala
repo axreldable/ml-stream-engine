@@ -11,18 +11,35 @@ object InputAdapterJob extends App {
 
   val params: Parameters = Parameters(args)
 
-  val stringEventConsumer = new FlinkKafkaConsumer[String](
-    "input-adapter-in", new SimpleStringSchema(), params.kafkaConsumerProperties
+  val eventConsumer = new FlinkKafkaConsumer[String](
+    "input-event-in", new SimpleStringSchema(), params.kafkaConsumerProperties
+  )
+  val eventProducer = new FlinkKafkaProducer[InternalEvent](
+    "input-event-out", new InternalEventSerializer(), params.kafkaProducerProperties
   )
 
-  val eventProducer = new FlinkKafkaProducer[InternalEvent](
-    "input-adapter-out", new InternalEventSerializer(), params.kafkaProducerProperties
+  val configConsumer = new FlinkKafkaConsumer[String](
+    "input-config-in", new SimpleStringSchema(), params.kafkaConsumerProperties
+  )
+  val configProducer = new FlinkKafkaProducer[InternalConfig](
+    "input-config-out", new InternalConfigSerializer(), params.kafkaProducerProperties
+  )
+
+  val modelConsumer = new FlinkKafkaConsumer[String](
+    "input-model-in", new SimpleStringSchema(), params.kafkaConsumerProperties
+  )
+  val modelProducer = new FlinkKafkaProducer[InternalModel](
+    "input-model-out", new InternalModelSerializer(), params.kafkaProducerProperties
   )
 
   InputAdapterBuilder(
     env = env,
-    stringEventSource = stringEventConsumer,
-    internalEventSink = eventProducer
+    eventSource = eventConsumer,
+    configSource = configConsumer,
+    modelSource = modelConsumer,
+    eventSink = eventProducer,
+    configSink = configProducer,
+    modelSink = modelProducer
   ).build()
 
   env.execute()

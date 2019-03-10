@@ -12,11 +12,15 @@ object OutputAdapterJob extends App {
   val params: Parameters = Parameters(args)
 
   val eventConsumer = new FlinkKafkaConsumer[InternalEvent](
-    "output-adapter-in", new InternalEventDeserializer(), params.kafkaConsumerProperties
+    "output-event-in", new InternalEventDeserializer(), params.kafkaConsumerProperties
   )
 
-  val stringProducer = new FlinkKafkaProducer[String](
-    "output-adapter-out", new SimpleStringSchema(), params.kafkaProducerProperties
+  val alarmProducer = new FlinkKafkaProducer[String](
+    "output-alarm-topic", new SimpleStringSchema(), params.kafkaProducerProperties
+  )
+
+  val otherProducer = new FlinkKafkaProducer[String](
+    "output-other-topic", new SimpleStringSchema(), params.kafkaProducerProperties
   )
 
   OutputAdapterBuilder(

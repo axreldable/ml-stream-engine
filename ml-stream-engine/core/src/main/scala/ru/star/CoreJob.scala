@@ -11,17 +11,25 @@ object CoreJob extends App {
   val params: Parameters = Parameters(args)
 
   val eventConsumer = new FlinkKafkaConsumer[InternalEvent](
-    "input-adapter-out", new InternalEventDeserializer(), params.kafkaConsumerProperties)
+    "input-event-out", new InternalEventDeserializer(), params.kafkaConsumerProperties)
 
-  val eventProducer = new FlinkKafkaProducer[InternalEvent](
-    "output-adapter-in", new InternalEventSerializer(), params.kafkaProducerProperties
+  val configConsumer = new FlinkKafkaConsumer[InternalConfig](
+    "input-config-out", new InternalConfigDeserializer(), params.kafkaConsumerProperties)
+
+  val modelConsumer = new FlinkKafkaConsumer[InternalModel](
+    "input-model-out", new InternalModelDeserializer(), params.kafkaConsumerProperties)
+
+  val predictionProducer = new FlinkKafkaProducer[ConfiguredEventWithPrediction](
+    "output-event-in", new ConfiguredEventWithPredictionSerializer(), params.kafkaProducerProperties
   )
 
-//  MLExecutorBuilder(
-//    env = env,
-//    eventSource = eventConsumer,
-//    eventSink = eventProducer
-//  ).build()
+  MLExecutorBuilder(
+    env = env,
+    eventSource = eventConsumer,
+    configSource = configConsumer,
+    modelSource = modelConsumer,
+    eventWithPredictionSink = predictionProducer
+  ).build()
 
   env.execute()
 }

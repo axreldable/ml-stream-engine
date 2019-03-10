@@ -10,7 +10,8 @@ lazy val global = project
     common,
     core,
     input_adapter,
-    output_adapter
+    output_adapter,
+    message_worker
   )
 
 lazy val common = project
@@ -23,7 +24,9 @@ lazy val common = project
       Dependencies.flinkCore,
       Dependencies.flinkStreaming,
       Dependencies.flinkConnectorKafka,
-      Dependencies.flinkJpmml  
+      Dependencies.flinkJpmml,
+      
+      Dependencies.slf4jHelper  
     )
   )
 
@@ -53,6 +56,17 @@ lazy val core = project
   .in(file("core"))
   .settings(
     name := "core",
+    version := "1.0.0",
+    assemblySettings,
+    libraryDependencies ++= Seq(
+      Dependencies.scalaTest % Test
+    )
+  ).dependsOn(common)
+
+lazy val message_worker = project
+  .in(file("message_worker"))
+  .settings(
+    name := "message_worker",
     version := "1.0.0",
     assemblySettings,
     libraryDependencies ++= Seq(

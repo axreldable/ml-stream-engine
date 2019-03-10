@@ -1,48 +1,26 @@
 package ru.star
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
+import java.util.UUID
 
-import io.radicalbit.flink.pmml.scala.models.input.BaseEvent
 import org.apache.flink.api.common.serialization.{DeserializationSchema, SerializationSchema}
 import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.streaming.api.scala.createTypeInformation
 
-/**
-  * Inner representation of Event.
-  * All messages transform into this representation in input-adapter.
-  * And core of the system works with this events only.
-  *
-  * @param id      - unique message identifier
-  * @param message - message context
-  */
-// todo: replace message with event representation
-final case class InternalEvent(id: String,
-                               messageTimestamp: Long,
-                               createTimestamp: Long,
-                               message: Option[String]) extends Serializable with BaseEvent {
-  override def modelId: String = "123"
-
-  override def occurredOn: Long = 123
-}
+final case class InternalEvent(id: String, configName: String, message: String)
 
 object InternalEvent {
   def fromString(event: String): InternalEvent = {
+    val ar = event.split(" ")
     InternalEvent(
-      id = "1",
-      messageTimestamp = 1,
-      createTimestamp = 1,
-      message = Option(event)
+      id = UUID.randomUUID().toString,
+      configName = ar(0),
+      message = ar(1)
     )
-  }
-
-  def toString(event: InternalEvent): String = {
-    event.message.getOrElse("empty message")
   }
 }
 
-
 class InternalEventDeserializer() extends DeserializationSchema[InternalEvent] {
-
   override def deserialize(message: Array[Byte]): InternalEvent = {
     val ois = new ObjectInputStream(new ByteArrayInputStream(message))
     val value = ois.readObject

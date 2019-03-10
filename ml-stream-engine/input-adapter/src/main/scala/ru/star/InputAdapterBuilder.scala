@@ -5,15 +5,26 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.scala.{StreamExecutionEnvironment, _}
 
 final case class InputAdapterBuilder(env: StreamExecutionEnvironment,
-                                     stringEventSource: SourceFunction[String],
-                                     internalEventSink: SinkFunction[InternalEvent]) {
+                                     eventSource: SourceFunction[String],
+                                     configSource: SourceFunction[String],
+                                     modelSource: SourceFunction[String],
+                                     eventSink: SinkFunction[InternalEvent],
+                                     configSink: SinkFunction[InternalConfig],
+                                     modelSink: SinkFunction[InternalModel]
+                                    ) {
   def build(): Unit = {
+    processMessage(eventSource, modelSink, InternalEvent.fromString)
+    processMessage(configSource, configSink, InternalConfig.fromString)
+    processMessage(modelSource, modelSink, InternalModel.fromString)
+  }
+
+  def processMessage[IN, OUT](source: SourceFunction[IN], sink: SinkFunction[OUT], f: String => OUT): Unit = {
     env
-      .addSource(stringEventSource)
-      .map(stringEvent => {
-        println("In input-adapter " + stringEvent)
-        InternalEvent.fromString(stringEvent)
+      .addSource(source)
+      .map(message => {
+        println(s"Precessing '$message' in input-adapter.")
+        f(message)
       })
-      .addSink(internalEventSink)
+      .addSink(sink)
   }
 }
