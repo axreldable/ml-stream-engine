@@ -17,12 +17,12 @@ final case class EventConfig(triggerValue: Double,
                              modelConfig: ModelConfig,
                              transformConfig: TransformConfig)
 
-final case class InternalConfig(id: String, eventConfigs: Map[String, EventConfig])
+final case class InternalConfig(version: String, eventConfigs: Map[String, EventConfig]) extends Serializable
 
 object InternalConfig {
   def fromString(config: String): InternalConfig = {
     InternalConfig(
-      id = UUID.randomUUID().toString,
+      version = UUID.randomUUID().toString,
       eventConfigs = getEventConfigs(config)
     )
   }
@@ -32,9 +32,16 @@ object InternalConfig {
       "train_event" ->
         EventConfig(
           0.8,
-          ModelConfig("topic_if_fraud", "./pmml_source/simple.pmml", "c056b84c-6c58-42b7-b98e-90da537995a2", 1),
+          ModelConfig("./pmml_source/simple.pmml", "c056b84c-6c58-42b7-b98e-90da537995a2", 1),
           TransformConfig("fraudTransform")
         )
+    )
+  }
+
+  def default: InternalConfig = {
+    InternalConfig(
+      version = "default_version",
+      eventConfigs = Map.empty[String, EventConfig]
     )
   }
 }

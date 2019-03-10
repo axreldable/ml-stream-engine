@@ -1,6 +1,7 @@
 name := "ml-stream-engine"
 organization in ThisBuild := "ru.star"
 scalaVersion in ThisBuild := "2.11.12"
+scalacOptions in ThisBuild += "-Xmacro-settings:materialize-derivations" // for pureconfig debugging
 logLevel := Level.Info
 
 lazy val global = project
@@ -25,8 +26,9 @@ lazy val common = project
       Dependencies.flinkStreaming,
       Dependencies.flinkConnectorKafka,
       Dependencies.flinkJpmml,
+      Dependencies.pureConfig
       
-      Dependencies.slf4jHelper  
+//      Dependencies.slf4jHelper  
     )
   )
 

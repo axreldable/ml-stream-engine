@@ -1,5 +1,6 @@
 package ru.star
 
+import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.streaming.api.functions.sink.SinkFunction
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.scala.{StreamExecutionEnvironment, _}
@@ -13,12 +14,14 @@ final case class InputAdapterBuilder(env: StreamExecutionEnvironment,
                                      modelSink: SinkFunction[InternalModel]
                                     ) {
   def build(): Unit = {
-    processMessage(eventSource, modelSink, InternalEvent.fromString)
+    processMessage(eventSource, eventSink, InternalEvent.fromString)
     processMessage(configSource, configSink, InternalConfig.fromString)
     processMessage(modelSource, modelSink, InternalModel.fromString)
   }
 
-  def processMessage[IN, OUT](source: SourceFunction[IN], sink: SinkFunction[OUT], f: String => OUT): Unit = {
+  def processMessage[IN: TypeInformation, OUT: TypeInformation](source: SourceFunction[IN],
+                                                                sink: SinkFunction[OUT],
+                                                                f: IN => OUT): Unit = {
     env
       .addSource(source)
       .map(message => {

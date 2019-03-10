@@ -16,7 +16,7 @@ object MessageWorker extends App {
   )
 
   val configProducer = new FlinkKafkaProducer[String](
-    "input-event-in", new SimpleStringSchema(), params.kafkaProducerProperties
+    "input-config-in", new SimpleStringSchema(), params.kafkaProducerProperties
   )
 
   val modelProducer = new FlinkKafkaProducer[String](

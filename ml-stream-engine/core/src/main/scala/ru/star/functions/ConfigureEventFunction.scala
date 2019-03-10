@@ -9,7 +9,9 @@ import org.apache.flink.streaming.api.scala.createTypeInformation
 import org.apache.flink.util.Collector
 import ru.star.{ConfiguredEvent, InternalConfig, InternalEvent}
 
-class ConfigureEventFunction extends RichCoFlatMapFunction[InternalEvent, InternalConfig, ConfiguredEvent] {
+class ConfigureEventFunction
+  extends RichCoFlatMapFunction[InternalEvent, InternalConfig, ConfiguredEvent] {
+  @transient
   private var currentConfig: ValueState[InternalConfig] = _
 
   override def flatMap1(inputEvent: InternalEvent, out: Collector[ConfiguredEvent]): Unit = {
@@ -34,7 +36,7 @@ class ConfigureEventFunction extends RichCoFlatMapFunction[InternalEvent, Intern
 
   override def open(parameters: Configuration): Unit = {
     currentConfig = getRuntimeContext.getState(
-      new ValueStateDescriptor("config", createTypeInformation[InternalConfig])
+      new ValueStateDescriptor("config-state", createTypeInformation[InternalConfig])
     )
   }
 }

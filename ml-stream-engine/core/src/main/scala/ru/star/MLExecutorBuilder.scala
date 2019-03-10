@@ -15,8 +15,8 @@ final case class MLExecutorBuilder(env: StreamExecutionEnvironment,
                                   ) {
 
   def build(): Unit = {
-    val events = env.addSource(eventSource)
-    val configs = env.addSource(configSource)
+    val events = env.addSource(eventSource).keyBy(_.configName)
+    val configs = env.addSource(configSource).keyBy(_.version)
 
     val configuredEvents =
       events.connect(configs)
@@ -27,7 +27,7 @@ final case class MLExecutorBuilder(env: StreamExecutionEnvironment,
     val configuredEventsWithPredictions = configuredEvents.withSupportStream(models).evaluate {
       (configuredEvent, model) =>
         val vector = EventTransformer.transform(
-          configuredEvent.event, configuredEvent.eventConfig.transformConfig.funcName
+          configuredEvent.event, configuredEvent.config.transformConfig.funcName
         )
         val prediction = model.predict(vector)
 

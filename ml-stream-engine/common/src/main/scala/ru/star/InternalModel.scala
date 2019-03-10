@@ -1,6 +1,7 @@
 package ru.star
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
+import java.util.UUID
 
 import io.radicalbit.flink.pmml.scala.models.control.AddMessage
 import org.apache.flink.api.common.serialization.{DeserializationSchema, SerializationSchema}
@@ -9,7 +10,7 @@ import org.apache.flink.streaming.api.scala.createTypeInformation
 
 final case class AddModelMessage(name: String, version: Long, path: String, occurredOn: Long)
 
-final case class InternalModel(id: String, addMessage: AddModelMessage) {
+final case class InternalModel(id: String, addMessage: AddModelMessage) extends Serializable {
   def toAddMessage: AddMessage = {
     val name = addMessage.name
     val version = addMessage.version
@@ -25,7 +26,7 @@ object InternalModel {
     val ar = model.split(" ")
 
     InternalModel(
-      id = "1",
+      id = UUID.randomUUID().toString,
       addMessage = AddModelMessage(ar(0), ar(1).toLong, ar(2), System.currentTimeMillis())
     )
   }
