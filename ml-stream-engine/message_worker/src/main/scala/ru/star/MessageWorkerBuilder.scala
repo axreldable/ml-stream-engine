@@ -24,7 +24,7 @@ final case class MessageWorkerBuilder(env: StreamExecutionEnvironment,
 
   def rout(from: DataStream[String], to: SinkFunction[String]): Unit = {
     from.map(message => {
-      //        println(message)
+              println(message)
       message
     }).addSink(to)
   }

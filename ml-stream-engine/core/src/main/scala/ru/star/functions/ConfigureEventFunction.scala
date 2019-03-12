@@ -9,13 +9,21 @@ import org.apache.flink.streaming.api.scala.createTypeInformation
 import org.apache.flink.util.Collector
 import ru.star.{ConfiguredEvent, InternalConfig, InternalEvent}
 
+import scala.util.{Failure, Success, Try}
+
 class ConfigureEventFunction
   extends RichCoFlatMapFunction[InternalEvent, InternalConfig, ConfiguredEvent] {
-  @transient
+
   private var currentConfig: ValueState[InternalConfig] = _
 
   override def flatMap1(inputEvent: InternalEvent, out: Collector[ConfiguredEvent]): Unit = {
     println(s"InternalEvent='$inputEvent' received.")
+
+//    Try(currentConfig.value()) match {
+//      case Success(_) => println(s"CurrentConfig already set to $currentConfig.")
+//      case Failure(_) => currentConfig.update(InternalConfig.default)
+//    }
+//    println(currentConfig.value().eventConfigs)
 
     currentConfig.value().eventConfigs.get(inputEvent.configName) match {
       case Some(eventConfig) =>

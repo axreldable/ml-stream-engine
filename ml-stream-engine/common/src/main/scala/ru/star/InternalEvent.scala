@@ -7,7 +7,7 @@ import org.apache.flink.api.common.serialization.{DeserializationSchema, Seriali
 import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.streaming.api.scala.createTypeInformation
 
-final case class InternalEvent(id: String, configName: String, message: String) extends Serializable
+final case class InternalEvent(id: String, configName: String, message: String, key: String = "1") extends Serializable
 
 object InternalEvent {
   def fromString(event: String): InternalEvent = {

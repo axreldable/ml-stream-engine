@@ -17,7 +17,7 @@ final case class EventConfig(triggerValue: Double,
                              modelConfig: ModelConfig,
                              transformConfig: TransformConfig)
 
-final case class InternalConfig(version: String, eventConfigs: Map[String, EventConfig]) extends Serializable
+final case class InternalConfig(version: String, eventConfigs: Map[String, EventConfig], key: String = "1") extends Serializable
 
 object InternalConfig {
   def fromString(config: String): InternalConfig = {

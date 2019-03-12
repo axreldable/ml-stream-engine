@@ -15,8 +15,8 @@ final case class MLExecutorBuilder(env: StreamExecutionEnvironment,
                                   ) {
 
   def build(): Unit = {
-    val events = env.addSource(eventSource).keyBy(_.configName)
-    val configs = env.addSource(configSource).keyBy(_.version)
+    val events = env.addSource(eventSource).keyBy(_.key)
+    val configs = env.addSource(configSource).keyBy(_.key)
 
     val configuredEvents =
       events.connect(configs)
