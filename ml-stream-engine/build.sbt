@@ -76,6 +76,21 @@ lazy val message_worker = project
     )
   ).dependsOn(common)
 
+lazy val spark_ml_job = project
+  .in(file("spark-ml-job"))
+  .settings(
+    name := "spark-ml-job",
+    version := "1.0.0",
+    assemblySettings,
+    libraryDependencies ++= Seq(
+      Dependencies.sparkCore,
+      Dependencies.sparkSql,
+      Dependencies.scopt,
+      Dependencies.scalaTest % Test,
+      Dependencies.sparkTestingBase % Test
+    )
+  ).dependsOn(common)
+
 lazy val assemblySettings = Seq(
   assemblyJarName in assembly := name.value + "_" + version.value + ".jar",
   assemblyMergeStrategy in assembly := {
