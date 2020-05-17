@@ -1,2 +1,0 @@
-name 1 ./pmml_db/simple.pmml
-name2 1 ./pmml_db/simple1.pmml
