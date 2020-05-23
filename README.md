@@ -4,8 +4,9 @@
 The system allows you to serve machine learning models on event streams using different approaches.
 
 ### Architecture of the system
-External Kafka to communicate with the user.
-Internal Kafka for the system's modules communication.
+External Kafka to communicate with the user.  
+Internal Kafka - for the system's modules communication.
+
 ![Architecture](https://github.com/axreldable/msu-diploma-thesis/blob/master/images/msu-ml-streaming-system.png)
 
 ### Architecture of the input-adapter
@@ -14,10 +15,12 @@ input-adapter allows you:
  - divide traffic between models (ex. A/B testing)
  - transform events before evaluation
  - update configuration online
+ 
 ![input-adapter](https://github.com/axreldable/msu-diploma-thesis/blob/master/images/input-adapter.png)
 
-### spark-ml-job
+### Architecture of the spark-ml-job
 A separate spark-streaming job with one embedded spark-mlib model.
+
 ![spark-ml-job](https://github.com/axreldable/msu-diploma-thesis/blob/master/images/spark-ml-job.png)
 
 #### Technologies
