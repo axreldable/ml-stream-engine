@@ -37,7 +37,7 @@ pmml-ml-job allows you to serve models using [TensorFlow Serving](https://www.te
 
 ### Architecture of the output-adapter
 output-adapter allows you:
- - move events into right result topic
+ - move events into result topic
  - transform events after evaluation
  - update configuration online
  
