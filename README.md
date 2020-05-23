@@ -4,7 +4,7 @@
 The system allows you to serve machine learning models on event streams using different approaches.
 
 ### Architecture of the system
-External Kafka to communicate with the user.  
+External Kafka to communicate with users.  
 Internal Kafka - for the system's modules communication.
 
 ![Architecture](https://github.com/axreldable/msu-diploma-thesis/blob/master/images/msu-ml-streaming-system.png)
@@ -22,6 +22,26 @@ input-adapter allows you:
 A separate spark-streaming job with one embedded spark-mlib model.
 
 ![spark-ml-job](https://github.com/axreldable/msu-diploma-thesis/blob/master/images/spark-ml-job.png)
+
+### Architecture of the pmml-ml-job
+pmml-ml-job allows you:
+- serve models in [PMML](http://dmg.org/pmml/v4-1/GeneralStructure.html) format
+- add, update, delete models online
+
+![spark-ml-job](https://github.com/axreldable/msu-diploma-thesis/blob/master/images/pmml-ml-job.png)
+
+### Architecture of the service-ml-job
+pmml-ml-job allows you to serve models using [TensorFlow Serving](https://www.tensorflow.org/tfx/guide/serving)
+
+![spark-ml-job](https://github.com/axreldable/msu-diploma-thesis/blob/master/images/service-ml-job.png)
+
+### Architecture of the output-adapter
+output-adapter allows you:
+ - move events into right result topic
+ - transform events after evaluation
+ - update configuration online
+ 
+![input-adapter](https://github.com/axreldable/msu-diploma-thesis/blob/master/images/output-adapter.png)
 
 #### Technologies
 
