@@ -48,6 +48,7 @@ output-adapter allows you:
 - [Apache Kafka](https://kafka.apache.org)
 - [Apache Flink](https://flink.apache.org)
 - [Apache Spark](https://spark.apache.org)
+- [TensorFlow Serving](https://www.tensorflow.org/tfx/guide/serving)
 - Monitoring: [Prometheus](https://prometheus.io), [Grafana](https://grafana.com)
 
 #### How to install
