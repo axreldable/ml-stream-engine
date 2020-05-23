@@ -1,15 +1,23 @@
 
-### Machine learning model serving system for event streams
+## Machine learning model serving system for event streams
 
 The system allows you to serve machine learning models on event streams using different approaches.
 
-#### Architecture of the system
+### Architecture of the system
+External Kafka to communicate with the user.
+Internal Kafka for the system's modules communication.
 ![Architecture](https://github.com/axreldable/msu-diploma-thesis/blob/master/images/msu-ml-streaming-system.png)
 
-##### input-adapter
+### Architecture of the input-adapter
+input-adapter allows you:
+ - move events into right model
+ - divide traffic between models (ex. A/B testing)
+ - transform events before evaluation
+ - update configuration online
 ![input-adapter](https://github.com/axreldable/msu-diploma-thesis/blob/master/images/input-adapter.png)
 
-##### spark-ml-job
+### spark-ml-job
+A separate spark-streaming job with one embedded spark-mlib model.
 ![spark-ml-job](https://github.com/axreldable/msu-diploma-thesis/blob/master/images/spark-ml-job.png)
 
 #### Technologies
