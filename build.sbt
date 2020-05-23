@@ -1,4 +1,4 @@
-name := "final-project"
+name := "ml-stream-engine"
 organization in ThisBuild := "ru.star"
 scalaVersion in ThisBuild := "2.11.12"
 parallelExecution in ThisBuild := false

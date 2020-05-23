@@ -28,7 +28,7 @@ object Helpers {
   }
 
   def sendModel(topic: String, producer: KafkaProducer[String, ServingMessage]): Unit = {
-    val path = "/Users/axreldable/Desktop/projects/otus/data-engineer/otus_data_engineer_2019_11_starikov/final-project/pmml-job/src/main/resources/kmeans.xml"
+    val path = "/Users/axreldable/Desktop/projects/msu/msu-diploma-thesis/pmml-job/src/main/resources/kmeans.xml"
     val message = AddMessage(
       name = "123e4567-e89b-12d3-a456-426655440000",
       version = 1,

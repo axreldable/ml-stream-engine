@@ -1,1 +1,0 @@
-"".headOption.getOrElse("").toString

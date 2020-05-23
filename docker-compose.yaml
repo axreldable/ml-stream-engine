@@ -11,6 +11,8 @@ services:
       context: ./spark-tweet-job
     depends_on:
       - kafka
+    expose:
+      - "9093"
 
   jobmanager:
     image: flink:1.10.0-scala_2.11

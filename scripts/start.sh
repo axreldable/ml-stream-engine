@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Building project..."
-#sbt assembly -mem 4096
+sbt assembly -mem 4096
 
 echo "Stopping previous running..."
 ./scripts/stop.sh
@@ -19,7 +19,8 @@ flink run output-adapter/target/scala-2.11/output-adapter_1.0.0.jar &
 
 echo "Starting spark job..."
 #docker-compose build spark-tweet-job
-docker-compose up -d spark-tweet-job
+#docker-compose up -d spark-tweet-job
+./spark-tweet-job/run.sh &
 
 echo "Starting generator..."
 #docker-compose build generator
