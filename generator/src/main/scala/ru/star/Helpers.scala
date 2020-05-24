@@ -39,7 +39,8 @@ object Helpers {
     producer.send(new ProducerRecord[String, ServingMessage](topic, message))
   }
 
-  def sendMessages(tweetSource: String, tweetTopic: String, irisTopic: String, producer: KafkaProducer[String, String]): Unit = {
+  def sendMessages(tweetSource: String, tweetTopic: String, irisTopic: String, imageTopic: String,
+                   producer: KafkaProducer[String, String]): Unit = {
     val separator = "###"
     val bufferedSource = Source.fromFile(tweetSource)
     for (line <- bufferedSource.getLines) {
@@ -51,6 +52,10 @@ object Helpers {
       val iris = s"iris-type$separator${createIris()}"
       println(iris)
       producer.send(new ProducerRecord[String, String](irisTopic, iris))
+
+      val image = s"image-type$separator${createImage()}"
+      println(image)
+      producer.send(new ProducerRecord[String, String](imageTopic, image))
 
       Thread.sleep(1000)
     }
@@ -71,6 +76,14 @@ object Helpers {
 
     val iris = s"${dataForIris(0)},${dataForIris(1)},${dataForIris(2)},${dataForIris(3)}"
     iris
+  }
+
+  def createImage(): String = {
+    if (Random.nextBoolean()) {
+      "/pug.jpeg"
+    } else {
+      "/retriever.jpg"
+    }
   }
 }
 

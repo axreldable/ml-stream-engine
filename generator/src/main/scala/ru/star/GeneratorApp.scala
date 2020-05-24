@@ -16,6 +16,7 @@ object GeneratorApp extends App {
     tweetSource = "/tmp/data/training.1600000.processed.noemoticon.csv",
     tweetTopic = "ml-stream-input-adapter-message-in",
     irisTopic = "ml-stream-input-adapter-message-in",
+    imageTopic = "ml-stream-input-adapter-message-in",
     producer = stringProducer
   )
 }
