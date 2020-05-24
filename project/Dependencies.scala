@@ -27,4 +27,10 @@ object Dependencies {
 
   lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.30"
   lazy val slf4j12 = "org.slf4j" % "slf4j-log4j12" % "1.7.30"
+
+  lazy val kafkaStreams = "org.apache.kafka" % "kafka-streams" % "2.3.0"
+  lazy val grpcProtobuf = "io.grpc" % "grpc-protobuf" % "1.13.1"
+  lazy val grpcProtobufJava = "com.google.protobuf" % "protobuf-java" % "3.6.0"
+  lazy val grpcNetty = "io.grpc" % "grpc-netty" % "1.13.1"
+  lazy val grpcAll ="io.grpc" % "grpc-all" % "1.13.1"
 }

@@ -22,6 +22,11 @@ echo "Starting spark job..."
 #docker-compose up -d spark-tweet-job
 ./spark-tweet-job/run.sh &
 
+echo "Starting service job..."
+#docker-compose build spark-tweet-job
+#docker-compose up -d spark-tweet-job
+./service-ml-job/run.sh &
+
 echo "Starting generator..."
 #docker-compose build generator
 docker-compose up -d generator

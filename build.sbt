@@ -14,7 +14,8 @@ lazy val global = project
     spark_tweet_job,
     output_adapter,
     pmml_job,
-    common
+    common,
+    service_ml_job
   )
 
 lazy val input_adapter = project
@@ -118,6 +119,20 @@ lazy val pmml_job = project
     assemblySettings,
     libraryDependencies ++= Seq(
       Dependencies.flinkConnectorKafka,
+    )
+  ).dependsOn(common)
+
+lazy val service_ml_job = project
+  .in(file("service-ml-job"))
+  .settings(
+    name := "service-ml-job",
+    version := "1.0.0",
+    assemblySettings,
+    libraryDependencies ++= Seq(
+      Dependencies.kafkaStreams,
+      Dependencies.grpcNetty,
+      Dependencies.grpcAll,
+      Dependencies.grpcProtobufJava,
     )
   ).dependsOn(common)
 

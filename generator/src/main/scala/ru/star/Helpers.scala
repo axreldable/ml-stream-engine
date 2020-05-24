@@ -80,9 +80,9 @@ object Helpers {
 
   def createImage(): String = {
     if (Random.nextBoolean()) {
-      "/pug.jpeg"
+      "/Users/axreldable/Desktop/projects/msu/msu-diploma-thesis/service-ml-job/src/main/resources/pug.jpeg"
     } else {
-      "/retriever.jpg"
+      "/Users/axreldable/Desktop/projects/msu/msu-diploma-thesis/service-ml-job/src/main/resources/retriever.jpg"
     }
   }
 }
